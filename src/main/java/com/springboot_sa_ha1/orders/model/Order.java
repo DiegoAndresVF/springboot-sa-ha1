@@ -1,32 +1,38 @@
 package com.springboot_sa_ha1.orders.model;
 
-
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Entity
-@Table(name = "ordenes")
+@Table(name = "orders")
 @Getter
 @Setter
 public class Order {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Integer id;
 
-  @NotBlank
-  private String name;
+  @NotNull
+  private Long quantity;
 
-  @NotBlank
-  private String email;
+  @NotNull
+  @Column(name = "order_date", nullable = false)
+  private LocalDate orderDate;
 
+  @NotNull
+  private Long total;
 
-  private String phone;
+  @NotNull
+  @Column(name = "id_product")
+  private Integer productId;
 
-  @NotBlank
-  private String password;
-
+  @NotNull
+  @Column(name = "id_costumer")
+  private Integer customerId;
 }
 
 
