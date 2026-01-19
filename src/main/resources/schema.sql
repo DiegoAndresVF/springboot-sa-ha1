@@ -29,12 +29,12 @@ CREATE TABLE IF NOT EXISTS categories (
     );
 
 CREATE TABLE IF NOT EXISTS products (
-                                        id_product SERIAL PRIMARY KEY,
-                                        product_name VARCHAR(30) NOT NULL,
+    id_product SERIAL PRIMARY KEY,
+    product_name VARCHAR(30) NOT NULL,
     price NUMERIC(10,2) NOT NULL,
     stock INTEGER NOT NULL,
     description VARCHAR(500),
-    image BYTEA,
+    --image BYTEA,
     id_category INTEGER NOT NULL,
     CONSTRAINT fk_product_category
     FOREIGN KEY (id_category)
@@ -42,10 +42,10 @@ CREATE TABLE IF NOT EXISTS products (
     );
 
 CREATE TABLE IF NOT EXISTS orders (
-                                      id_order SERIAL PRIMARY KEY,
-                                      quantity INTEGER NOT NULL,
-                                      order_date DATE NOT NULL,
-                                      total NUMERIC(10,2) NOT NULL,
+  id_order SERIAL PRIMARY KEY,
+  quantity INTEGER NOT NULL,
+  order_date DATE NOT NULL,
+  total NUMERIC(10,2) NOT NULL,
     id_product INTEGER NOT NULL,
     id_customer INTEGER NOT NULL,
     CONSTRAINT fk_order_product

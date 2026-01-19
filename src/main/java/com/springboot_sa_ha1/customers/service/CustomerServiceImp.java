@@ -2,6 +2,7 @@ package com.springboot_sa_ha1.customers.service;
 
 import com.springboot_sa_ha1.customers.dto.CustomerRequest;
 import com.springboot_sa_ha1.customers.dto.CustomerResponse;
+import com.springboot_sa_ha1.customers.mapper.CustomerMapper;
 import com.springboot_sa_ha1.customers.model.Customer;
 import com.springboot_sa_ha1.customers.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,23 +14,28 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class CustomerServiceImp implements CustomerService {
     //private final CustomerRepository customerRepository;
-    @Autowired
-    private CustomerRepository repository;
+
+    private final CustomerRepository repository;
+    private final CustomerMapper mapper;
+
+    public CustomerServiceImp(CustomerRepository repository, CustomerMapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
+    }
 
     @Override
     public List<CustomerResponse> listarTodos(){
         return repository.findAll().stream()
-                .map(this::toResponse)
+                .map(mapper::toResponse)
                 .collect(Collectors.toList());
     }
 
     @Override
     public CustomerResponse obtenerPorId(Long id){
         return repository.findById(id)
-                .map(this::toResponse)
+                .map(mapper::toResponse)
                 .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
     }
 
@@ -39,7 +45,7 @@ public class CustomerServiceImp implements CustomerService {
         customer.setName(request.name());
         customer.setEmail(request.email());
         customer.setPassword(request.password());
-        return toResponse(repository.save(customer));
+        return mapper.toResponse(repository.save(customer));
     }
 
     @Override
@@ -49,7 +55,7 @@ public class CustomerServiceImp implements CustomerService {
         customer.setName(request.name());
         customer.setEmail(request.email());
         customer.setPassword(request.password());
-        return toResponse(repository.save(customer));
+        return mapper.toResponse(repository.save(customer));
     }
 
     @Override

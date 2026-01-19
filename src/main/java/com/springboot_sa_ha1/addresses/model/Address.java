@@ -13,19 +13,20 @@ import lombok.Setter;
 public class Address {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Long id_address;
 
   @NotBlank
-  private String name;
+  private String address;
 
   @NotBlank
-  private String email;
-
-
-  private String phone;
+  private String city;
 
   @NotBlank
-  private String password;
+  private String region;
+
+  private Integer zip_code;
+
+  private Long id_customer;
 
 }
 

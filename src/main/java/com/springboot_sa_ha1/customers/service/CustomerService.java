@@ -2,7 +2,6 @@ package com.springboot_sa_ha1.customers.service;
 
 import com.springboot_sa_ha1.customers.dto.CustomerRequest;
 import com.springboot_sa_ha1.customers.dto.CustomerResponse;
-import com.springboot_sa_ha1.customers.model.Customer;
 
 import java.util.List;
 import java.util.Optional;
