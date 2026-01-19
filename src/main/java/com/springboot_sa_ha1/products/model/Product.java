@@ -19,13 +19,14 @@ public class Product {
   private String name;
 
   @NotBlank
-  private String precio;
+  private String price;
 
-
-  private String stock;
+  private Long stock;
 
   @NotBlank
   private String description;
+
+  private Long id_category;
 
 }
 
