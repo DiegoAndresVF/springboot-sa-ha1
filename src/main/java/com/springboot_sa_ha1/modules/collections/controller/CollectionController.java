@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/collections")
+@RequestMapping("/api/collection")
 //@RequiredArgsConstructor
 public class CollectionController {
 

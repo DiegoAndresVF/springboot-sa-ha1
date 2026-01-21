@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/customers")   //Se define la ruta base del controlador
+@RequestMapping("/api/customer")   //Se define la ruta base del controlador
 //@RequiredArgsConstructor
 public class CustomerController {
 
