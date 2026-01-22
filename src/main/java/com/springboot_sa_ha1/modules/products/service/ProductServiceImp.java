@@ -58,14 +58,18 @@ public class ProductServiceImp implements ProductService {
 
   @Override
   public ProductResponse actualizar(Long id, ProductRequest request) {
-    Product Product = repository.findById(id)
-        .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
-    Product.setName(request.product_name());
-    Product.setPrice(request.price());
-    Product.setStock(request.stock());
-    Product.setDescription(request.description());
-    Product.setId_category(request.id_category());
-    return mapper.toResponse(repository.save(Product));
+      Product product = repository.findById(id)
+              .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+      product.setName(request.product_name());
+      product.setPrice(request.price());
+      product.setStock(request.stock());
+      product.setDescription(request.description());
+      product.setImageUrl(request.imageUrl());
+      product.setId_category(request.id_category());
+      product.setId_collection(request.id_collection());
+
+      return mapper.toResponse(repository.save(product));
   }
 
   @Override
