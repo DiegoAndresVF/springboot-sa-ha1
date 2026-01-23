@@ -11,7 +11,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,7 +19,6 @@ import java.util.Set;
 @Getter
 @Setter
 public class Product {
-
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -39,8 +37,6 @@ public class Product {
   @Column(nullable = false)
   private String description;
 
-  private String imageUrl;
-
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<ProductImage> images = new HashSet<>();
 
@@ -50,10 +46,6 @@ public class Product {
 
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<ProductCollection> productCollections = new HashSet<>();
-
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "id_category", insertable = false, updatable = false)
-  private Category category;
 
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
   private Set<OrderProduct> orderProducts = new HashSet<>();

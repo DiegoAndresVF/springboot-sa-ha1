@@ -7,6 +7,6 @@ public record ProductRequest(
     Long price,
     Long stock,
     String description,
-    Long categoryId,
-    List<String> images
+    List<String> images,
+    Long categoryId
 ) {}
