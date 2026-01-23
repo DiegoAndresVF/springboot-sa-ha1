@@ -1,9 +1,12 @@
 package com.springboot_sa_ha1.modules.products.dto;
 
+import java.util.List;
+
 public record ProductRequest(
-    String product_name,
+    String name,
     Long price,
     Long stock,
     String description,
-    Long id_category
+    List<String> images,
+    Long categoryId
 ) {}

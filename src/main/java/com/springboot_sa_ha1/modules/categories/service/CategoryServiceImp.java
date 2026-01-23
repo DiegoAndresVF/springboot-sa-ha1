@@ -39,9 +39,15 @@ public class CategoryServiceImp implements CategoryService {
 
   @Override
   public CategoryResponse guardar(CategoryRequest request){
+    // Generar slug automáticamente
+    String normalizedSlug = request.name()
+        .trim()
+        .toLowerCase()
+        .replace(" ", "_");
     Category category = new Category();
-    category.setCategory_name(request.category_name());
+    category.setName(request.name());
     category.setDescription(request.description());
+    category.setSlug(normalizedSlug);
     return mapper.toResponse(repository.save(category));
   }
 
@@ -49,7 +55,7 @@ public class CategoryServiceImp implements CategoryService {
   public CategoryResponse actualizar(Long id, CategoryRequest request){
     Category category = repository.findById(id)
         .orElseThrow(() -> new RuntimeException("Colección no encontrada"));
-    category.setCategory_name(request.category_name());
+    category.setName(request.name());
     category.setDescription(request.description());
 
     return mapper.toResponse(repository.save(category));

@@ -1,7 +1,10 @@
 package com.springboot_sa_ha1.modules.products.model;
 
 
+import com.springboot_sa_ha1.modules.categories.model.Category;
 import com.springboot_sa_ha1.modules.order_products.model.OrderProduct;
+import com.springboot_sa_ha1.modules.product_collections.model.ProductCollection;
+import com.springboot_sa_ha1.modules.productimages.model.ProductImage;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -21,19 +24,33 @@ public class Product {
   private Long id;
 
   @NotBlank
+  @Column(nullable = false)
   private String name;
 
   @NotNull
+  @Column(nullable = false)
   private Long price;
 
   private Long stock;
 
   @NotBlank
+  @Column(nullable = false)
   private String description;
 
-  private Long id_category;
+  @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+  @Column(name = "images")
+  private Set<ProductImage> images = new HashSet<>();
 
-  @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+  @ManyToOne(optional = false)
+  @JoinColumn(name = "id_category", nullable = false)
+  private Category category;
+
+  @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+  @Column(name = "product_collections")
+  private Set<ProductCollection> productCollections = new HashSet<>();
+
+  @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+  @Column(name = "order_products")
   private Set<OrderProduct> orderProducts = new HashSet<>();
 }
 
