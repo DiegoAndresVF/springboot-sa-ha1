@@ -1,6 +1,7 @@
 package com.springboot_sa_ha1.modules.products.model;
 
 
+import com.springboot_sa_ha1.modules.categories.model.Category;
 import com.springboot_sa_ha1.modules.order_products.model.OrderProduct;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -36,6 +37,10 @@ public class Product {
   private Long id_category;
 
   private Long id_collection;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "id_category", insertable = false, updatable = false)
+  private Category category;
 
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
   private Set<OrderProduct> orderProducts = new HashSet<>();
