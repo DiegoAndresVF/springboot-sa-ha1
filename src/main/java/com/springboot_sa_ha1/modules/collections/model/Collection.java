@@ -22,9 +22,11 @@ public class Collection {
   private Long id;
 
   @NotBlank
-  private String collection_name;
+  private String name;
 
   private String description;
+
+  private String slug;
 
   @OneToMany(mappedBy = "collection", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<ProductCollection> productCollections = new HashSet<>();

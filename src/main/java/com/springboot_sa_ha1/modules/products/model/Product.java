@@ -38,16 +38,19 @@ public class Product {
   private String description;
 
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+  @Column(name = "images")
   private Set<ProductImage> images = new HashSet<>();
 
   @ManyToOne(optional = false)
-  @JoinColumn(name = "category_id", nullable = false)
+  @JoinColumn(name = "id_category", nullable = false)
   private Category category;
 
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+  @Column(name = "product_collections")
   private Set<ProductCollection> productCollections = new HashSet<>();
 
-  @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+  @Column(name = "order_products")
   private Set<OrderProduct> orderProducts = new HashSet<>();
 }
 

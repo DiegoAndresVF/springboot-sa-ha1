@@ -9,20 +9,11 @@ public interface OrderProductService {
 
   List<OrderProductResponse> listarTodos();
 
-  OrderProductResponse obtenerPorId(
-      Long orderId,
-      Long productId
-  );
-  OrderProductResponse guardar(
-      OrderProductRequest request
-  );
-  OrderProductResponse actualizar(
-      Long orderId,
-      Long productId,
-      OrderProductRequest request
-  );
-  void eliminar(
-      Long orderId,
-      Long productId
-  );
+  OrderProductResponse obtenerPorId(Long id);
+
+  OrderProductResponse guardar(OrderProductRequest request);
+
+  OrderProductResponse actualizar(Long id, OrderProductRequest request);
+
+  void eliminar(Long id);
 }

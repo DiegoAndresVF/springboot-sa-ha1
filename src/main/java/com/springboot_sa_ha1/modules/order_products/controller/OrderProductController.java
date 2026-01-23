@@ -19,45 +19,37 @@ public class OrderProductController {
     this.orderProductService = orderProductService;
   }
 
+  // Listar todos los order-products
   @GetMapping
   public ResponseEntity<List<OrderProductResponse>> listar() {
     return ResponseEntity.ok(orderProductService.listarTodos());
   }
 
-  @GetMapping("/order/{orderId}/product/{productId}")
-  public ResponseEntity<OrderProductResponse> obtenerPorId(
-      @PathVariable Long orderId,
-      @PathVariable Long productId
-  ) {
-    return ResponseEntity.ok(
-        orderProductService.obtenerPorId(orderId, productId)
-    );
+  // Obtener order-product por su ID
+  @GetMapping("/{id}")
+  public ResponseEntity<OrderProductResponse> obtenerPorId(@PathVariable Long id) {
+    return ResponseEntity.ok(orderProductService.obtenerPorId(id));
   }
 
-  @PostMapping("/create")
-  public ResponseEntity<OrderProductResponse> crear(
-      @Valid @RequestBody OrderProductRequest request
-  ) {
+  // Crear nuevo order-product
+  @PostMapping
+  public ResponseEntity<OrderProductResponse> crear(@Valid @RequestBody OrderProductRequest request) {
     return ResponseEntity.ok(orderProductService.guardar(request));
   }
 
-  @PutMapping("/order/{orderId}/product/{productId}")
+  // Actualizar order-product por ID
+  @PutMapping("/{id}")
   public ResponseEntity<OrderProductResponse> actualizar(
-      @PathVariable Long orderId,
-      @PathVariable Long productId,
+      @PathVariable Long id,
       @Valid @RequestBody OrderProductRequest request
   ) {
-    return ResponseEntity.ok(
-        orderProductService.actualizar(orderId, productId, request)
-    );
+    return ResponseEntity.ok(orderProductService.actualizar(id, request));
   }
 
-  @DeleteMapping("/order/{orderId}/product/{productId}")
-  public ResponseEntity<Void> eliminar(
-      @PathVariable Long orderId,
-      @PathVariable Long productId
-  ) {
-    orderProductService.eliminar(orderId, productId);
+  // Eliminar order-product por ID
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+    orderProductService.eliminar(id);
     return ResponseEntity.noContent().build();
   }
 }

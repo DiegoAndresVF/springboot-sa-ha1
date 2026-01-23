@@ -9,9 +9,9 @@ public class CategoryMapper {
   public CategoryResponse toResponse(Category category) {
     return new CategoryResponse(
         category.getId(),
-        category.getCategory_name(),
-        category.getSlug(),
-        category.getDescription()
+        category.getName(),
+        category.getDescription(),
+        category.getSlug()
     );
   }
 }

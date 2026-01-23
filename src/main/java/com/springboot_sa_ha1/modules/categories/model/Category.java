@@ -19,9 +19,8 @@ public class Category {
   private Long id;
 
   @NotBlank
-  private String category_name;
+  private String name;
 
-  @NotBlank
   private String description;
 
   private String slug;
