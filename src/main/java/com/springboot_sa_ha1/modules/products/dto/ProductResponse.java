@@ -8,5 +8,6 @@ public record ProductResponse(
     String description,
     String imageUrl,
     Long id_category,
+    String category_name,
     Long id_collection
 ) {}
