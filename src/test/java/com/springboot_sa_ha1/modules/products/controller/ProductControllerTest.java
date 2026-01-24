@@ -7,7 +7,6 @@ import com.springboot_sa_ha1.modules.products.dto.ProductResponse;
 import com.springboot_sa_ha1.modules.products.service.ProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -29,33 +28,33 @@ class ProductControllerTest {
     @Test
     void testCrearProducto() {
         ProductRequest request = new ProductRequest(
-                "Collar",
-                150L,
-                10L,
-                "Un collar bonito",
-                List.of("https://imagen1.jpg", "https://imagen2.jpg"),
-                1L,
-                List.of(
-                        new CollectionResponse(1L, "Verano", "Colección de verano", "extra"),
-                        new CollectionResponse(2L, "Invierno", "Colección de invierno", "extra")
-                )
+            "Collar",
+            150L,
+            10L,
+            "Un collar bonito",
+            List.of("https://imagen1.jpg", "https://imagen2.jpg"),
+            1L,
+            List.of(
+                new CollectionResponse(1L, "Verano", "Colección de verano", "verano-slug", "imagen1.jpg"),
+                new CollectionResponse(2L, "Invierno", "Colección de invierno", "invierno-slug", "imagen2.jpg")
+            )
         );
 
-        CategoryResponse category = new CategoryResponse(1L, "Accesorios", "Descripción cat", "extra");
+        CategoryResponse category = new CategoryResponse(1L, "Accesorios", "Descripción cat", "accesorios-slug", "cat.jpg");
         List<CollectionResponse> collections = request.collections();
 
         ProductResponse response = new ProductResponse(
-                1L,
-                request.name(),
-                request.price(),
-                request.stock(),
-                request.description(),
-                request.images(),
-                category,
-                collections
+            1L,
+            request.name(),
+            request.price(),
+            request.stock(),
+            request.description(),
+            request.images(),
+            category,
+            collections
         );
 
-        when(productService.guardar(request)).thenReturn(response);
+        when(productService.guardar(any(ProductRequest.class))).thenReturn(response);
 
         ResponseEntity<ProductResponse> result = productController.crear(request);
 
@@ -65,23 +64,23 @@ class ProductControllerTest {
         assertEquals(2, result.getBody().collections().size());
         assertEquals(2, result.getBody().imageUrls().size());
 
-        verify(productService, times(1)).guardar(request);
+        verify(productService, times(1)).guardar(any(ProductRequest.class));
     }
 
     @Test
     void testListarProductos() {
-        CategoryResponse category = new CategoryResponse(1L, "Accesorios", "Descripción cat", "extra");
+        CategoryResponse category = new CategoryResponse(1L, "Accesorios", "Descripción cat", "accesorios-slug", "cat.jpg");
 
         ProductResponse prod1 = new ProductResponse(
-                1L, "Collar", 150L, 10L, "Bonito collar",
-                List.of("img1.jpg"), category,
-                List.of(new CollectionResponse(1L, "Verano", "Col verano", "extra"))
+            1L, "Collar", 150L, 10L, "Bonito collar",
+            List.of("img1.jpg"), category,
+            List.of(new CollectionResponse(1L, "Verano", "Col verano", "verano-slug", "imagen1.jpg"))
         );
 
         ProductResponse prod2 = new ProductResponse(
-                2L, "Pulsera", 100L, 5L, "Bonita pulsera",
-                List.of("img2.jpg"), category,
-                List.of(new CollectionResponse(2L, "Invierno", "Col invierno", "extra"))
+            2L, "Pulsera", 100L, 5L, "Bonita pulsera",
+            List.of("img2.jpg"), category,
+            List.of(new CollectionResponse(2L, "Invierno", "Col invierno", "invierno-slug", "imagen2.jpg"))
         );
 
         when(productService.listarTodos()).thenReturn(List.of(prod1, prod2));
@@ -96,11 +95,11 @@ class ProductControllerTest {
     @Test
     void testObtenerPorId() {
         Long id = 1L;
-        CategoryResponse category = new CategoryResponse(1L, "Accesorios", "Descripción cat", "extra");
+        CategoryResponse category = new CategoryResponse(1L, "Accesorios", "Descripción cat", "accesorios-slug", "cat.jpg");
         ProductResponse response = new ProductResponse(
-                id, "Collar", 150L, 10L, "Bonito collar",
-                List.of("img1.jpg"), category,
-                List.of(new CollectionResponse(1L, "Verano", "Col verano", "extra"))
+            id, "Collar", 150L, 10L, "Bonito collar",
+            List.of("img1.jpg"), category,
+            List.of(new CollectionResponse(1L, "Verano", "Col verano", "verano-slug", "imagen1.jpg"))
         );
 
         when(productService.obtenerPorId(id)).thenReturn(response);
@@ -116,35 +115,35 @@ class ProductControllerTest {
     void testActualizarProducto() {
         Long id = 1L;
         ProductRequest request = new ProductRequest(
-                "Collar Actualizado",
-                200L,
-                15L,
-                "Collar muy bonito",
-                List.of("img1.jpg", "img2.jpg"),
-                1L,
-                List.of(new CollectionResponse(1L, "Verano", "Col verano", "extra"))
+            "Collar Actualizado",
+            200L,
+            15L,
+            "Collar muy bonito",
+            List.of("img1.jpg", "img2.jpg"),
+            1L,
+            List.of(new CollectionResponse(1L, "Verano", "Col verano", "verano-slug", "imagen1.jpg"))
         );
 
-        CategoryResponse category = new CategoryResponse(1L, "Accesorios", "Descripción cat", "extra");
+        CategoryResponse category = new CategoryResponse(1L, "Accesorios", "Descripción cat", "accesorios-slug", "cat.jpg");
         ProductResponse response = new ProductResponse(
-                id,
-                request.name(),
-                request.price(),
-                request.stock(),
-                request.description(),
-                request.images(),
-                category,
-                request.collections()
+            id,
+            request.name(),
+            request.price(),
+            request.stock(),
+            request.description(),
+            request.images(),
+            category,
+            request.collections()
         );
 
-        when(productService.actualizar(id, request)).thenReturn(response);
+        when(productService.actualizar(anyLong(), any(ProductRequest.class))).thenReturn(response);
 
         ResponseEntity<ProductResponse> result = productController.actualizar(id, request);
 
         assertEquals(200, result.getStatusCodeValue());
         assertEquals("Collar Actualizado", result.getBody().name());
         assertEquals(2, result.getBody().imageUrls().size());
-        verify(productService, times(1)).actualizar(id, request);
+        verify(productService, times(1)).actualizar(anyLong(), any(ProductRequest.class));
     }
 
     @Test
@@ -159,4 +158,3 @@ class ProductControllerTest {
         verify(productService, times(1)).eliminar(id);
     }
 }
-

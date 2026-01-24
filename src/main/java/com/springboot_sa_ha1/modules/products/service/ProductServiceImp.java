@@ -2,7 +2,6 @@ package com.springboot_sa_ha1.modules.products.service;
 
 import com.springboot_sa_ha1.modules.categories.model.Category;
 import com.springboot_sa_ha1.modules.categories.repository.CategoryRepository;
-import com.springboot_sa_ha1.modules.collections.dto.CollectionInputResponse;
 import com.springboot_sa_ha1.modules.collections.dto.CollectionResponse;
 import com.springboot_sa_ha1.modules.collections.model.Collection;
 import com.springboot_sa_ha1.modules.collections.repository.CollectionRepository;
@@ -109,7 +108,7 @@ public class ProductServiceImp implements ProductService {
 
     // 🔹 Colecciones
     if (request.collections() != null && !request.collections().isEmpty()) {
-      for (CollectionInputResponse colResp : request.collections()) {
+      for (CollectionResponse colResp : request.collections()) {
         Collection collection = collectionRepository.findById(colResp.id())
             .orElseThrow(() -> new RuntimeException("Colección no encontrada: " + colResp.id()));
 
@@ -167,7 +166,7 @@ public class ProductServiceImp implements ProductService {
     // Limpiar y agregar colecciones nuevas
     product.getProductCollections().clear();
     if (request.collections() != null && !request.collections().isEmpty()) {
-      for (CollectionInputResponse colInput : request.collections()) {
+      for (CollectionResponse colInput : request.collections()) {
 
         Collection collection;
 
