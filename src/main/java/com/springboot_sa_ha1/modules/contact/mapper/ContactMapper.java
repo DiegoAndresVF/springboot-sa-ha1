@@ -13,6 +13,7 @@ public class ContactMapper {
                 contact.getId(),
                 contact.getName(),
                 contact.getEmail(),
+                contact.getPhone(),
                 contact.getMessage()
         );
     }
