@@ -83,5 +83,4 @@ name VARCHAR(200) NOT NULL,
 email VARCHAR(255) NOT NULL,
 phone VARCHAR(20),
 message TEXT NOT NULL,
-created_at TIMESTAMP DEFAULT NOW()
 );
