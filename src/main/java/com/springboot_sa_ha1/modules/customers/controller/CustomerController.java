@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/customers")   //Se define la ruta base del controlador
+@RequestMapping("/api/customer")   //Se define la ruta base del controlador
 //@RequiredArgsConstructor
 public class CustomerController {
 
@@ -28,6 +28,15 @@ public class CustomerController {
     @GetMapping("/{id}")
     public ResponseEntity<CustomerResponse> obtenerPorId(@PathVariable Long id){
         return ResponseEntity.ok(customerService.obtenerPorId(id));
+    }
+
+    @GetMapping("/email/{email:.+}")
+    public ResponseEntity<CustomerResponse> obtenerPorEmail(@PathVariable String email) {
+        CustomerResponse customer = customerService.obtenerPorEmail(email);
+        if (customer == null) {
+            return ResponseEntity.notFound().build(); // 404
+        }
+        return ResponseEntity.ok(customer);
     }
 
     @PostMapping("/create")

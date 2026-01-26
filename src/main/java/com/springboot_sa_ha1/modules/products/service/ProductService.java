@@ -6,6 +6,9 @@ import com.springboot_sa_ha1.modules.products.dto.ProductResponse;
 import java.util.List;
 
 public interface ProductService {
+    List<ProductResponse> searchByTerm(String term);
+    List<ProductResponse> listarPorCategoriaSlug(String slug);
+    List<ProductResponse> listarPorColeccionSlug(String slug);
     List<ProductResponse> listarTodos();
     ProductResponse obtenerPorId(Long id);
     ProductResponse guardar(ProductRequest request);

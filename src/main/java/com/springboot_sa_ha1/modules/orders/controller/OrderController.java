@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/orders")   //Se define la ruta base del controlador
+@RequestMapping("/api/order")   //Se define la ruta base del controlador
 //@RequiredArgsConstructor
 public class OrderController {
 

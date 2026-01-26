@@ -1,7 +1,8 @@
 package com.springboot_sa_ha1.modules.collections.model;
 
 
-import com.springboot_sa_ha1.modules.order_product.model.OrderProduct;
+import com.springboot_sa_ha1.modules.product_collections.model.ProductCollection;
+import com.springboot_sa_ha1.modules.products.model.Product;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -14,15 +15,24 @@ import java.util.Set;
 @Table(name = "colecciones")
 @Getter
 @Setter
-
 public class Collection {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id_collection;
+  private Long id;
 
   @NotBlank
-  private String collection_name;
+  private String name;
 
   private String description;
 
+  private String slug;
+
+  private String image;
+
+  @OneToMany(
+      mappedBy = "collection",
+      fetch = FetchType.LAZY,
+      cascade = CascadeType.ALL
+  )
+  private Set<ProductCollection> productCollections = new HashSet<>();
 }

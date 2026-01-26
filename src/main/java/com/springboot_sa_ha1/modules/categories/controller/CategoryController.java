@@ -3,7 +3,9 @@ package com.springboot_sa_ha1.modules.categories.controller;
 
 import com.springboot_sa_ha1.modules.categories.dto.CategoryRequest;
 import com.springboot_sa_ha1.modules.categories.dto.CategoryResponse;
+import com.springboot_sa_ha1.modules.categories.dto.CategoryWithProductsResponse;
 import com.springboot_sa_ha1.modules.categories.service.CategoryService;
+import com.springboot_sa_ha1.modules.products.dto.ProductResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/categories")
+@RequestMapping("/api/category")
 public class CategoryController {
 
   private final CategoryService categoryService;
@@ -23,6 +25,11 @@ public class CategoryController {
   @GetMapping
   public ResponseEntity<List<CategoryResponse>> listar() {
     return ResponseEntity.ok(categoryService.listarTodos());
+  }
+
+  @GetMapping("/filtered-with-products")
+  public List<CategoryWithProductsResponse> listarCategoriasConProductosPorSlug(@RequestParam List<String> slugs) {
+    return categoryService.listarCategoriasConProductosPorSlug(slugs);
   }
 
   @GetMapping("/{id}")

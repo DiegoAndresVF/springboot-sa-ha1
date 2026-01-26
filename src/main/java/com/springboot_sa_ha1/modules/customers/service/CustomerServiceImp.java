@@ -37,6 +37,13 @@ public class CustomerServiceImp implements CustomerService {
     }
 
     @Override
+    public CustomerResponse obtenerPorEmail(String email) {
+        return repository.findByEmailIgnoreCase(email)
+            .map(mapper::toResponse)
+            .orElse(null); // devuelve null si no existe
+    }
+
+    @Override
     public CustomerResponse guardar(CustomerRequest request){
         Customer customer = new Customer();
         customer.setName(request.name());
@@ -51,7 +58,8 @@ public class CustomerServiceImp implements CustomerService {
         Customer customer = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
         customer.setName(request.name());
-        customer.setEmail(request.email());
+        // customer.setEmail(request.email()); // ← NO actualizar email (mantener el original)
+        // Nota: El email se mantiene como está en la base de datos
         customer.setPasswordHash(request.password());
         return mapper.toResponse(repository.save(customer));
     }
@@ -61,6 +69,8 @@ public class CustomerServiceImp implements CustomerService {
         repository.deleteById(id);
     }
 
+
+    /*
     private CustomerResponse toResponse(Customer customer){
         return new CustomerResponse(
                 customer.getId(),
@@ -69,6 +79,8 @@ public class CustomerServiceImp implements CustomerService {
                 customer.getPasswordHash()
         );
     }
+    */
+
     /*
     @Override
     public List<Customer> listarTodos(){

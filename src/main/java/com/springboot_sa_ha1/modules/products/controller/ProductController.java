@@ -1,16 +1,19 @@
 package com.springboot_sa_ha1.modules.products.controller;
 
+import com.springboot_sa_ha1.modules.categories.service.CategoryService;
 import com.springboot_sa_ha1.modules.products.dto.ProductRequest;
 import com.springboot_sa_ha1.modules.products.dto.ProductResponse;
+import com.springboot_sa_ha1.modules.products.model.Product;
 import com.springboot_sa_ha1.modules.products.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api/product")
 //@RequiredArgsConstructor
 public class ProductController {
 
@@ -18,6 +21,27 @@ public class ProductController {
 
   public ProductController(ProductService productService) {
     this.productService = productService;
+  }
+
+  @GetMapping("/search")
+  public ResponseEntity<List<ProductResponse>> searchProducts(@RequestParam String term) {
+    return ResponseEntity.ok(productService.searchByTerm(term));
+  }
+
+  // 🔹 PRODUCTOS POR CATEGORÍA (slug)
+  @GetMapping("/category/{slug}")
+  public List<ProductResponse> listarPorCategoriaSlug(
+      @PathVariable String slug
+  ) {
+    return productService.listarPorCategoriaSlug(slug);
+  }
+
+  // 🔹 PRODUCTOS POR COLECCIÓN (slug)
+  @GetMapping("/collection/{slug}")
+  public List<ProductResponse> listarPorColeccionSlug(
+      @PathVariable String slug
+  ) {
+    return productService.listarPorColeccionSlug(slug);
   }
 
   @GetMapping
